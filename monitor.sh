@@ -22,13 +22,13 @@ speakerStatus=0;
 oldTvUsage=0
 
 ac () {
-	echo "acildi";
+	#echo "acildi";
 	./sauger 1
 	speakerStatus=1;
 }
 
 kapat () {
-	echo "kapandi";
+	#echo "kapandi";
 	./sauger 0
 	speakerStatus=0;
 }
@@ -40,11 +40,11 @@ while true; do
 	newTvUsage=$(cat /sys/class/net/$ethDevice/statistics/tx_bytes);
 	usageDiff=$(($newTvUsage-$oldTvUsage));
 
-	ping -c 1 -W 1 $pingAddress > /dev/null; #replace with ZBOX
-	pingSuccess=$? #//exit code to variable(0 ise succ, 1 ise fail)
+	ping -c 1 -W 1 $pingAddress > /dev/null; 
+	pingSuccess=$? #//exit code to variable- 0 means ping success,1 failure
 
 	echo $usageDiff
-	if [ $usageDiff -gt 10000 ] #//fazla trafik varsa
+	if [ $usageDiff -gt 10000 ] 
 	then
 		sleep 1&wait
 		oldTvUsage=$(cat /sys/class/net/$ethDevice/statistics/tx_bytes);
@@ -54,7 +54,7 @@ while true; do
 
 		if [ $usageDiff -gt 10000 ] && [ $speakerStatus -eq 0 ]
 		then
-			echo "high usage speaker was off"
+			#echo "high usage speaker was off"
 			ac;
 		fi
 
@@ -62,26 +62,26 @@ while true; do
 	then
 		if [ $speakerStatus -eq 0 ] 
 		then
-			echo "ping success speaker was off"
+			#echo "ping success speaker was off"
 			ac;
 		fi
 
 	else
 		if [ $speakerStatus -eq 1 ]
 		then
-			echo "testing values again to turn off"
+			#echo "testing values again to turn off"
 			sleep $turnOffTimeout&wait
 			oldTvUsage=$(cat /sys/class/net/$ethDevice/statistics/tx_bytes);
 			sleep 1&wait
 			newTvUsage=$(cat /sys/class/net/$ethDevice/statistics/tx_bytes);
 			usageDiff=$(($newTvUsage-$oldTvUsage));
-			echo $usageDiff
+			#echo $usageDiff
 			ping -c 1 -W 1 $pingAddress > /dev/null; 
 			pingSuccess=$?
 
 			if [ $usageDiff -lt 10000 ] && [ $pingSuccess -eq 1 ]
 			then
-				echo "no traffic no ping speaker was on"
+				#echo "no traffic no ping speaker was on"
 				kapat;
 			fi
 		fi
