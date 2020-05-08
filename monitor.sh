@@ -6,7 +6,7 @@
 export MIROBO_TOKEN=11111111111111aaaaaaaaaaaaabcdef  #xiaomi wifi plug (chaungmi ) token
 export MIROBO_IP=192.168.1.9 #Xiaomi wifi plug IP
 
-pingAddress=192.168.1.42 #Monitor is this device is alive
+pingAddress=192.168.1.42 #Monitor if this device is alive
 ethDevice=eth2 #Monitor if this interface has traffic
 turnOffTimeout=60
 
